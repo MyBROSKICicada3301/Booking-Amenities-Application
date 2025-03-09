@@ -4,6 +4,7 @@
 
 - This is a Flask-based web application that facilitates booking of party halls and sports amenities.
 - The system allows users to book amenities, make payments, and view existing bookings.
+- Completed as part of school curriculum project
 
 ## Features
 
