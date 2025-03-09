@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="static/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amenities Booking</title>
+</head>
+<body>
+    <div style="text-align: center;">
+        <h1>Welcome to Amenities Booking</h1>
+
+        <button id="party">Party Hall</button>
+        <button id="sports">Sports Amenities Booking</button>
+        <button id="bookings">Bookings Made</button>
+    </div>
+    <div id="slideshow-container">
+        <img class="slideshow-image" src="images/appartement1.jpg" alt="Apartment Image">
+        <img class="slideshow-image" src="images/basketball1.jpg" alt="Basketball Court Image">
+        <img class="slideshow-image" src="images/Brigade-Golden-Triangle-plan.jpg" alt="Property Plan Image">
+        <img class="slideshow-image" src="images/playground1.jpg" alt="Playground Image">
+        <img class="slideshow-image" src="images/basketball2.jpg" alt="Basketball Court Image">
+    </div>
+    <script>
+
+        const correctPassword = "password"; // can change the password here
+
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slideshow-image');
+
+        function showSlide(n) {
+            slides[currentSlide].style.display = 'none';
+            currentSlide = (n + slides.length) % slides.length;
+            slides[currentSlide].style.display = 'block';
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function previousSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        function promptForPassword() {
+            const enteredPassword = prompt("Enter the password:");
+            if (enteredPassword === correctPassword) {
+                window.location.href = "/bookings-made";
+            } else {
+                alert("Incorrect password. Access denied.");
+            }
+        }
+
+        // Automatically advance to the next slide every 3 seconds
+        setInterval(nextSlide, 3000);
+
+        // Add event listeners for the buttons
+        document.getElementById("party").addEventListener("click", function () {
+            window.location.href = "/party-hall";
+        });
+
+        document.getElementById("sports").addEventListener("click", function () {
+            window.location.href = "/sports-amenities";
+        });
+
+        document.getElementById("bookings").addEventListener("click", function () {
+            promptForPassword();
+        });
+    </script>
+</body>
+</html>

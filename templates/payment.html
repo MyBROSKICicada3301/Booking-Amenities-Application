@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="static/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Confirmation</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        .bill {
+            border: 1px solid #000;
+            padding: 10px;
+            margin: 20px auto;
+            width: 300px;
+        }
+
+        #error-box {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Payment Confirmation</h1>
+
+    <div class="bill">
+        <h2>Booking Bill</h2>
+        <p>Booking Duration: <span id="duration">6 hours</span></p>
+        <p>Booking Charge: ₹<span id="booking-charge">0</span></p>
+        <p>Security Deposit: ₹<span id="security-deposit">10000</span> (Pay at Helpdesk)</p>
+        <p>Subtotal: ₹<span id="subtotal">0</span></p>
+        <p>GST (18%): ₹<span id="gst">0</span></p>
+        <p>Total Amount: ₹<span id="total-amount">0</span></p>
+    </div>
+
+    <p>Enter UPI Address:</p>
+    <input type="text" id="upi" placeholder="Enter UPI Address">
+    <br><br>
+
+    <div id="error-box"></div>
+    
+    <!-- Amount Paid button -->
+    <button id="amount-paid">Amount Paid</button>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const bookingDuration = document.getElementById('duration');
+            const bookingCharge = document.getElementById('booking-charge');
+            const securityDeposit = document.getElementById('security-deposit');
+            const subtotal = document.getElementById('subtotal');
+            const gst = document.getElementById('gst');
+            const totalAmount = document.getElementById('total-amount');
+            const upiAddress = document.getElementById('upi').value;
+            console.log("hello");
+            console.log(upiAddress);
+            const errorBox = document.getElementById('error-box');
+
+            // Get the selected duration from localStorage
+            const selectedDuration = localStorage.getItem('selectedDuration');
+
+            // Update the booking duration on the page
+            bookingDuration.textContent = selectedDuration;
+
+            // Update booking charge based on the selected duration
+            if (selectedDuration === "Half-day(9am-2pm)" || selectedDuration === "Half-day(2pm-8pm)") {
+                bookingCharge.textContent = "6000";
+            } else if (selectedDuration === "Full Day(9am-9pm)") {
+                bookingCharge.textContent = "12000";
+            }
+
+            // Update security deposit
+            securityDeposit.textContent = "10000";
+
+            // Update other amounts
+            const bookingChargeValue = parseInt(bookingCharge.textContent);
+            const securityDepositValue = parseInt(securityDeposit.textContent);
+            const gstValue = (18 / 100) * bookingChargeValue;
+            const totalAmountValue = bookingChargeValue + gstValue ;
+
+            // Update bill
+            subtotal.textContent = totalAmountValue;
+            gst.textContent = gstValue;
+            totalAmount.textContent = totalAmountValue;
+
+
+            // Amount Paid button event listener
+            document.getElementById("amount-paid").addEventListener("click", function () {
+                const upiAddress = document.getElementById('upi');
+                const isValidUPI = validateUPI(upiAddress.value);
+                if (isValidUPI) {
+                    errorBox.textContent = '';  // Clear previous error message
+                    // Redirect to Booking Confirmation page
+                    window.location.href = "booking-confirmation.html";
+                    
+                } else {
+                    errorBox.textContent = 'Invalid UPI address. Please enter a valid UPI address.';
+                }
+                
+                // Add the following code to store the booking in the database
+                fetch('/payment', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        UPI: upiAddress.value,
+                    }),
+            });
+            });
+
+
+            // UPI validation function
+            function validateUPI(upi) {
+                const upiPattern = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+(\.[a-zA-Z]{2,})?$/;
+                return upiPattern.test(upi);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="static/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmation</title>
+</head>
+<body>
+    <div style="text-align: center;">
+        <h1>Bookings Made</h1>
+
+        <button id="party">Party Hall Bookings Made</button>
+        <button id="sports">Sports Amenities Bookings Made</button>
+
+    <script>
+        // Add event listeners for the buttons
+        document.getElementById("party").addEventListener("click", function () {
+            window.location.href = "/hall";
+        });
+
+        document.getElementById("sports").addEventListener("click", function () {
+            window.location.href = "/amenities";
+        });
+    </script>
+</body>
+</html>

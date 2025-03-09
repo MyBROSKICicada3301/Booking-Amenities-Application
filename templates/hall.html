@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="static/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Party Hall Bookings</title>
+    <style>
+        /* Add some basic styling for better appearance */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Party Hall Bookings</h1>
+    {% if bookings %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Flat Number</th>
+                    <th>Date</th>
+                    <th>Time Duration</th>
+                    <th>Phone Number</th>
+                    <th>UPI</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in bookings %}
+                    <tr>
+                        <td>{{ booking.id }}</td>
+                        <td>{{ booking.name }}</td>
+                        <td>{{ booking.flat_number }}</td>
+                        <td>{{ booking.date }}</td>
+                        <td>{{ booking.TimeDuration }}</td>
+                        <td>{{ booking.PhoneNumber }}</td>
+                        <td>{{ booking.UPI }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No bookings available.</p>
+    {% endif %}
+</body>
+</html>

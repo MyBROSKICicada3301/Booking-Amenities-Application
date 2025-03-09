@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="static/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Amenities Booking</title>
+</head>
+<body>
+    <h1>Sports Amenities Booking</h1>
+    <form id="sports-amenities-form">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="flat-number">Flat Number:</label>
+        <input type="text" id="flat-number" name="flat-number" pattern="[A-Fa-f]\d{4}" required><br><br>
+
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required><br><br>
+
+        <label for="start-time">Start Time:</label>
+        <input type="time" id="start-time" name="start-time" required><br><br>
+
+        <label for="end-time">End Time:</label>
+        <input type="time" id="end-time" name="end-time" required><br><br>
+
+        <label for="amenity">Select Amenity:</label>
+        <select id="amenity" name="amenity" required>
+            <option value="basketball-court">Basketball Court</option>
+            <option value="tennis-court">Tennis Court</option>
+            <option value="table-tennis-court-1">Table Tennis Court-1</option>
+            <option value="table-tennis-court-2">Table Tennis Court-2</option>
+            <option value="badminton-court-1">Badminton Court-1</option>
+            <option value="badminton-court-2">Badminton Court-2</option>
+            <option value="swimming-pool">Swimming Pool</option>
+            <option value="billiards-1">Billiards-1</option>
+            <option value="billiards-2">Billiards-2</option>
+        </select><br><br>
+
+        <button type="button" id="submit">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById("submit").addEventListener("click", function() {
+            const name = document.getElementById('name').value;
+            const flatNumber = document.getElementById('flat-number').value;
+            const date = document.getElementById('date').value;
+            const startTime = document.getElementById('start-time').value;
+            const endTime = document.getElementById('end-time').value;
+            const amenity = document.getElementById('amenity').value;
+
+            // Client-side validation
+            let isValid = true;
+
+            // Name validation
+            if (name.trim() === "") {
+                alert("Please enter your name.");
+                isValid = false;
+            }
+
+            // Flat number validation
+            if (!flatNumber.match(/^[A-Fa-f]\d{4}$/)) {
+                alert("Please enter a valid flat number in the format A1234.");
+                isValid = false;
+            }
+
+            // Date validation
+            if (date === "") {
+                alert("Please select a date.");
+                isValid = false;
+            }
+
+            // Time validation
+            if (startTime === "" || endTime === "") {
+                alert("Please select both start and end times.");
+                isValid = false;
+            }
+
+            // Time range validation (up to 10:00 PM)
+            const startTimeObj = new Date(`2000-01-01T${startTime}`);
+            const endTimeObj = new Date(`2000-01-01T${endTime}`);
+            if (endTimeObj > new Date(`2000-01-01T22:00`)) {
+                alert("End time cannot exceed 10:00 PM.");
+                isValid = false;
+            }
+
+            // Amenity validation
+            if (amenity === "") {
+                alert("Please select an amenity.");
+                isValid = false;
+            }
+
+            if (isValid) {
+                fetch('/process-sports-amenities-booking', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        flatNumber: flatNumber,
+                        date: date,
+                        startTime: startTime,
+                        endTime: endTime,
+                        amenity: amenity,
+                    }),
+                });
+                // Proceed to booking confirmation page
+                window.location.href = "booking-confirmation.html";
+            }
+        });
+    </script>
+</body>
+</html>

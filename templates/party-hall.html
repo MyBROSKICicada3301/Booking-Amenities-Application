@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="static/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Party Hall Booking</title>
+</head>
+<body>
+    <h1>Party Hall Booking</h1>
+    <form id="party-hall-form">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="flat-number">Flat Number (Format: A1234):</label>
+        <input type="text" id="flat-number" name="flat-number" pattern="[A-Fa-f]\d{4}" required><br><br>
+
+        <label for="booking-duration">Select your booking duration from the dropbox:</label>
+        <select id="booking-duration" name="booking-duration" required>
+            <option value="Half-day(9am-2pm)">Half-day (6hrs) between 9am to 2pm</option>
+            <option value="Half-day(2pm-8pm)">Half-day (6hrs) between 2pm to 8pm</option>
+            <option value="Full Day(9am-9pm)">Full Day (12 hrs) between 9am to 9pm</option>
+        </select><br><br>
+
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" name="phone" required><br><br>
+
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required><br><br>
+
+        <button type="button" id="submit">Submit</button>
+    </form>
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>Time</th>
+
+                <th>Cost</th>
+
+                <th>Cost with 18% GST</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr>
+
+                <td>8:00am to 2:00pm</td>
+
+                <td>₹6000</td>
+
+                <td>₹7080</td>
+
+            </tr>
+
+            <tr>
+
+                <td>2:00pm to 8:00pm</td>
+
+                <td>₹6000</td>
+
+                <td>₹7080</td>
+
+            </tr>
+
+            <tr>
+
+                <td>8:00am to 8:00pm</td>
+
+                <td>₹12000</td>
+
+                <td>₹14160</td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+    <script>
+        document.getElementById("submit").addEventListener("click", function() {
+            const name = document.getElementById('name').value;
+            const flatNumber = document.getElementById('flat-number').value;
+            const date = document.getElementById('date').value;
+            const bookingDuration = document.getElementById('booking-duration').value;
+            const phone = document.getElementById('phone').value;
+
+            // Validate flat number format
+            const flatNumberPattern = /[A-Fa-f]\d{4}/;
+            if (!flatNumberPattern.test(flatNumber)) {
+                alert('Flat number should be in the format A1234 (first letter and four digits).');
+                return;
+            }
+
+            // Validate phone number format
+            const phonePattern = /^(\d{3})[- ]?(\d{3})[- ]?(\d{4})$/;
+            // Adjust the pattern if needed
+            if (!phonePattern.test(phone)) {
+                alert('Please enter a valid 10-digit phone number.');
+                return;
+            }
+
+            // Store the selected duration in localStorage
+            localStorage.setItem('selectedDuration', bookingDuration);
+
+            // Add the following code to store the booking in the database
+            fetch('/process-party-hall-booking', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: name,
+                    amenity_type: 'Party Hall',
+                    flat_number: flatNumber,
+                    date: date,
+                    booking_duration: bookingDuration,
+                    phone: phone,
+                }),
+            });
+
+            // Proceed with the booking
+            window.location.href = "payment.html";
+        });
+    </script>
+</body>
+</html>

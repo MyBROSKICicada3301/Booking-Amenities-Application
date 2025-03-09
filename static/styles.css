@@ -1,0 +1,97 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+  background-color: rgba(255, 255, 55, 0.668);
+}
+
+h1 {
+  color: #000000;
+}
+
+button {
+  background-color: #ffee00;
+  color: #000000;
+  border: none;
+  padding: 20px 40px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+button:hover {
+  background-color: #edc651;
+}
+
+#slideshow-container {
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.slideshow-image {
+  display: none;
+  width: 100%;
+  height: auto;
+}
+
+label {
+  display: block;
+}
+
+.error-message {
+  color: red;
+  display: none;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+h1 {
+  color: #333;
+}
+
+form {
+  margin-bottom: 20px;
+}
+
+table {
+  width: 80%;
+  margin: 0 auto; /* Center align the table */
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  border: 1px solid #333; /* Add borders to table cells */
+  padding: 10px;
+}
+
+thead {
+  background-color: #f2f2f2; /* Add background color to the table header */
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f9f9f9; /* Add alternating row background color */
+}
+
+button {
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* Add styles for form labels and inputs if needed */
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input, select, button {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}

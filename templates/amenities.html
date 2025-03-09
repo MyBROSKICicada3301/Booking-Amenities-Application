@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="static/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amenities Bookings</title>
+</head>
+<body>
+    <h1>Amenities Bookings</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Flat Number</th>
+                <th>Amenity Type</th>
+                <th>Date</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+                <tr>
+                    <td>{{ booking.id }}</td>
+                    <td>{{ booking.name }}</td>
+                    <td>{{ booking.flat_number }}</td>
+                    <td>{{ booking.amenity }}</td>
+                    <td>{{ booking.date }}</td>
+                    <td>{{ booking.start_time }}</td>
+                    <td>{{ booking.end_time }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
